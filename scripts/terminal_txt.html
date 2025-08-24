@@ -1,0 +1,94 @@
+<!-- I wanted a cool looking example of a text in terminal and decided to make it hehe -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal Text Visualizer</title>
+  <style>
+    html, body {
+      overflow: auto;
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none;
+    }
+    body {
+      background-color: #171717;
+      color: #e5e5e5;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px;
+    }
+
+    h1 {
+      margin-bottom: 33px;
+    }
+
+    textarea {
+      width: 75%;
+      height: 225px;
+      padding: 11px;
+      font-family: monospace;
+      font-size: 15px;
+      background-color: #2d2d2d;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      resize: none;
+      margin-bottom: 25px;
+    }
+
+    .terminal {
+      background-color: #000000;
+      color: #33ff33;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 25px;
+      width: 95%;
+      min-height: 275px;
+      white-space: pre-wrap;
+      border-radius: 11px;
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.75);
+    }
+
+    button {
+      background-color: #007200;
+      color: #000;
+      border: none;
+      padding: 11px 25px;
+      font-weight: bolder;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-bottom: 35px;
+    }
+
+    button:hover {
+      background-color: #28cc28;
+    }
+
+    footer {
+      font-size: smaller;
+      margin-top: 33px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Paste Text or write somthing</h1>
+
+  <textarea id="in_txt" placeholder="Paste/write here..."></textarea>
+  <button onclick="getTxt()">Render in Terminal</button>
+
+  <div class="terminal" id="terminalV">
+    <em>Output will appear here...</em>
+  </div>
+  <footer>&copy; Ayoub Chabraoui</footer>
+  <script>
+    function getTxt() {
+      const text = document.getElementById('in_txt').value;
+      const terminal = document.getElementById('terminalV');
+      terminal.textContent = text || "sudo `write something`";
+    }
+  </script>
+</body>
+</html>

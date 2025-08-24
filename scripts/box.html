@@ -1,0 +1,75 @@
+<!-- A simple html file i did long time ago when i first was exploring OCR -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Text Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: #ffffff;
+      background: #000000ea;
+      padding: 25px;
+    }
+    small {
+      color: rgb(0, 200, 0);
+      font-weight: bolder;
+      font-family: monospace;
+      font-style: italic;
+    }
+    input {
+      border: 1px solid #ccccccc7;
+      padding: 11px;
+    }
+    canvas {
+      border: 1px solid #ccccccc7;
+      margin-top: 11px;
+      width: 75%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload an image to detect text with <small>green boxes</small></h1>
+  <input type="file" id="img" accept="image/*"/>
+  <canvas id="cnv"></canvas>
+  <script>
+    const fl_input = document.getElementById("img");
+    const cnv = document.getElementById("cnv");
+    const detect = cnv.getContext("2d");
+    // file check
+    fl_input.addEventListener("change", (event) => {
+      const fl = event.target.files[0];
+      if (!fl) return;
+
+      const img = new Image();
+      const reader = new FileReader();
+      // putting the img on canvas
+      reader.onload = function(e) {
+        img.onload = function() {
+          cnv.width = img.width;
+          cnv.height = img.height;
+          detect.drawImage(img, 0, 0);
+          // ocr apply
+          Tesseract.recognize(img, 'eng', {
+            logger: m => console.log(m) // just a console process log
+          }).then(({ data }) => {
+            data.words.forEach(word => {
+              const { x0, y0, x1, y1 } = word.bbox;
+              // drawing the boxes
+              detect.strokeStyle = 'green';
+              detect.lineWidth = 1;
+              detect.strokeRect(x0, y0, x1 - x0, y1 - y0);
+            });
+          });
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(fl);
+    });
+  </script>
+</body>
+</html>
