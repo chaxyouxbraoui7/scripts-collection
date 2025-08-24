@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {--dark-bg: #06182b;--accent: #001f43;--accent-light: #ffffff;--text: #fff;--text-secondary: #d0d0d0eb;--border: #ffffff8f;}
+        
+        * {margin: 0;padding: 0;box-sizing: border-box;}
+        
+        body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background: var(--dark-bg);color: var(--text);line-height: 1.1;padding: 20px;}
+        
+        .container {width: 210mm;min-height: 297mm;margin: 0 auto;
+          box-shadow: 0 25px 44px rgba(0,0,0,.75);position: relative;overflow: hidden;}
+        
+        .header {background: var(--accent);padding: 25px;position: relative;overflow: hidden;}
+        
+        .profile-section {display: flex;align-items: center;gap: 33px;position: relative;z-index: 1;}
+        
+        .profile-image {width: 175px;height: 175px;border-radius: 50%;border: 5px solid var(--text);object-fit: cover;
+          box-shadow: 0 11px 25px rgba(0,0,0,.7);background: #000000;display: flex;align-items: center;
+          justify-content: center;color: var(--accent-light);font-size: 50px;}
+        
+        .profile-info h1 {font-size: 3rem;font-weight: bolder;color: var(--text);margin-bottom: 5px;letter-spacing: 7px;}
+        
+        .profile-info .title {font-size: 1.75rem;color: var(--text-secondary);letter-spacing: 5px;margin-bottom: 25px;}
+        
+        .contact-info {list-style: none;padding: 0;}
+        
+        .contact-info li {margin-bottom: 7px;font-size: 1rem;display: flex;align-items: center;gap: 11px;}
+        
+        .contact-info li i {color: var(--accent-light);width: 15px;text-align: center;}
+        
+        .main-content {display: grid;grid-template-columns: 1fr 1fr;}
+        
+        .left-column {background: #061525;padding: 44px;}
+        
+        .right-column {background: #05182d;padding: 44px;}
+        
+        .section {margin-bottom: 45px;}
+        
+        .section-title {font-size: 1.25rem;font-weight: bold;color: var(--accent-light);margin-bottom: 25px;letter-spacing: 5px;position: relative;padding-bottom: 3px;}
+        
+        .section-title::after {content: "";position: absolute;bottom: 0;left: 0;width: 75px;height: 1px;background: var(--accent-light);}
+        
+        .job, .education-item {margin-bottom: 25px;padding-bottom: 25px;border-bottom: 1px solid var(--border);}
+        
+        .job:last-child, .education-item:last-child {border-bottom: none;margin-bottom: 0;}
+        
+        .job-title, .degree {font-size: 1.5em;font-weight: bold;color: #fff;margin-bottom: 5px;}
+        
+        .job-period, .education-period {color: var(--accent-light);font-size: 1rem;margin-bottom: 7px;}
+        
+        .company, .school {color: var(--text-secondary);font-size: 1rem;margin-bottom: 7px;}
+        
+        .job-description, .education-description, .about-text {font-size: .9rem;color: var(--text-secondary);margin-bottom: 11px;}
+        
+        .accomplishments {list-style: none;padding-left: 0;}
+        
+        .accomplishments li {position: relative;padding-left: 11px;margin-bottom: 5px;font-size: .75rem;color: var(--text-secondary);}
+        
+        .accomplishments li::before {content: "•";position: absolute;left: 0;color: var(--accent-light);font-weight: bolder;}
+        
+        .skill {margin-bottom: 22px;}
+        
+        .skill-name {display: flex;justify-content: space-between;margin-bottom: 7px;font-size: 1rem;color: #fff;}
+        
+        .skill-bar {height: 5px;background: var(--border);border-radius: 11px;overflow: hidden;}
+        
+        .skill-progress {height: 100%;background: var(--accent-light);border-radius: 7px;transition: width 1.5s;width: 0;}
+        
+        .controls {padding: 10px;text-align: center;background: var(--dark-bg);margin-bottom: 15px;border-radius: 5px;width: 210mm;margin: 15px auto;}
+        
+        .controls label {color: #fff;cursor: pointer;display: inline-block;margin-bottom: 5px;}
+        
+        .controls input[type="file"] {display: none;}
+        
+        .upload-btn, #downloadBtn {font-size:1em;background: var(--accent);color: #fff;border: none;padding: 7px 11px;
+          margin: 5px;cursor: pointer;border-radius: 5px;transition: background 0.2s;}
+        
+        .upload-btn:hover, #downloadBtn:hover {background: var(--accent-light);color: #000;}
+        
+        /*@media print {
+            body {background: #fff;}
+            
+            .container {box-shadow: none;margin: 0;width: 100%;}
+            
+            .controls {display: none;}
+            
+            .left-column, .right-column, .header {background: #f9f9f9 !important;color: #000 !important;}
+            
+            .profile-info h1, .job-title, .degree, .skill-name span:first-child, .section-title {color: #000 !important;}
+            
+            .skill-bar {background: #ddd !important;}
+            
+            .skill-progress {background: #555 !important;}
+            
+            .contact-info li, .job-period, .education-period, .company, .school, .job-description, .education-description, .about-text {color: #333 !important;}
+            
+            .profile-image {border: 5px solid #000 !important;}
+            
+            .section-title::after {background: #000 !important;}
+            
+            .job, .education-item {border-bottom: 1px solid rgba(0,0,0,.2) !important;}
+            
+            .accomplishments li::before {color: #000 !important;}
+        }*/
+    </style>
+</head>
+<body>
+
+<div class="controls">
+    <label for="imgUpload" class="upload-btn">
+        <i class="fas fa-upload"></i> Upload Photo
+    </label>
+    <input type="file" id="imgUpload" accept="image/*">
+    <button id="downloadBtn">
+        <i class="fas fa-download"></i> Download PDF
+    </button>
+</div>
+
+<div class="container" id="resume">
+    <div class="header">
+        <div class="profile-section">
+            <div class="profile-image" id="profileImg">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1 contenteditable="true">Name</h1>
+                <div class="title" contenteditable="true">Profession</div>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> <span contenteditable="true">Address</span></li>
+                    <li><i class="fas fa-phone"></i> <span contenteditable="true">Phone</span></li>
+                    <li><i class="fas fa-envelope"></i> <span contenteditable="true">email</span></li>
+                    <li><i class="fab fa-github"></i> <span contenteditable="true">github.com/username</span></li>
+                    <li><i class="fab fa-linkedin"></i> <span contenteditable="true">linkedin.com/in/username</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left-column">
+            <div class="section">
+                <h2 class="section-title">PROFILE</h2>
+                <div class="about-text" contenteditable="true">Your profile or summary.<br>Describe your professional background, skills, and career goals. Keep it concise but impactful.</div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">EXPERIENCE</h2>
+                <div class="job">
+                    <div class="job-title" contenteditable="true">Job Title</div>
+                    <div class="job-period" contenteditable="true">Year - Year</div>
+                    <div class="company" contenteditable="true">Company - City, Country</div>
+                    <div class="job-description" contenteditable="true">Description.</div>
+                    <ul class="accomplishments">
+                        <li contenteditable="true">Achievement</li>
+                        <li contenteditable="true">Achievement</li>
+                    </ul>
+                </div>
+                <div class="job">
+                    <div class="job-title" contenteditable="true">Previous Job Title</div>
+                    <div class="job-period" contenteditable="true">Year - Year</div>
+                    <div class="company" contenteditable="true">Previous Company - City, Country</div>
+                    <div class="job-description" contenteditable="true">Description.</div>
+                    <ul class="accomplishments">
+                        <li contenteditable="true">Achievement</li>
+                        <li contenteditable="true">Achievement</li>
+                    </ul>
+                </div>
+                <div class="job">
+                    <div class="job-title" contenteditable="true">Previous Job Title</div>
+                    <div class="job-period" contenteditable="true">Year - Year</div>
+                    <div class="company" contenteditable="true">Previous Company - City, Country</div>
+                    <div class="job-description" contenteditable="true">Description.</div>
+                    <ul class="accomplishments">
+                        <li contenteditable="true">Achievement</li>
+                        <li contenteditable="true">Achievement</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">LANGUAGES</h2>
+                <div contenteditable="true">... - Native/Fluent</div>
+                <div contenteditable="true">... - Intermediate</div>
+                <div contenteditable="true">... - Basic</div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">INTERESTS</h2>
+                <div contenteditable="true">...</div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="section">
+                <h2 class="section-title">EDUCATION</h2>
+                <div class="education-item">
+                    <div class="degree" contenteditable="true">Degree Name</div>
+                    <div class="education-period" contenteditable="true">Year - Year</div>
+                    <div class="school" contenteditable="true">University Name - City, Country</div>
+                    <div class="education-description" contenteditable="true">Details.</div>
+                </div>
+                <div class="education-item">
+                    <div class="degree" contenteditable="true">Degree Name</div>
+                    <div class="education-period" contenteditable="true">Year - Year</div>
+                    <div class="school" contenteditable="true">University Name - City, Country</div>
+                    <div class="education-description" contenteditable="true">Details.</div>
+                </div>
+                <div class="education-item">
+                    <div class="degree" contenteditable="true">Degree Name</div>
+                    <div class="education-period" contenteditable="true">Year - Year</div>
+                    <div class="school" contenteditable="true">University Name - City, Country</div>
+                    <div class="education-description" contenteditable="true">Details.</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">SKILLS</h2>
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">Skill 1</span>
+                        <span contenteditable="true">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">Skill 2</span>
+                        <span contenteditable="true">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <div class="skill-name">
+                        <span contenteditable="true">Skill 3</span>
+                        <span contenteditable="true">75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">CERTIFICATIONS</h2>
+                <div contenteditable="true">Name - Year</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Image upload functionality
+document.getElementById('imgUpload').addEventListener('change', function(e){
+    const file = e.target.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(ev){
+            document.getElementById('profileImg').innerHTML = '';
+            document.getElementById('profileImg').style.backgroundImage = `url(${ev.target.result})`;
+            document.getElementById('profileImg').style.backgroundSize = 'cover';
+            document.getElementById('profileImg').style.backgroundPosition = 'center';
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Skill animation
+document.querySelectorAll('.skill-progress').forEach(bar => {
+    setTimeout(() => {
+        bar.style.width = bar.getAttribute('data-width') + '%';
+    }, 1000);
+});
+
+// PDF download
+document.getElementById('downloadBtn').addEventListener('click', function(){
+    // hiding controls before printing
+    const controls = document.querySelector('.controls');
+    controls.style.display = 'none';
+    
+    const resume = document.getElementById('resume');
+    const opt = {
+        margin: 0,
+        filename: 'resume.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(opt).from(resume).save().then(() => {
+        // showing controls after printing
+        controls.style.display = 'block';
+    });
+});
+</script>
+
+<!-- html2pdf CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>
