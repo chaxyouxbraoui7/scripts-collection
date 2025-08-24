@@ -13,8 +13,13 @@ file_path = filedialog.askopenfilename(
 
 if file_path:  # checking
     img = Image.open(file_path).convert("RGBA") # making the img transparency support
-    result = Image.new('L', img.size, 0) # makint the bg transparent with the same size
+    # crop to square
+    diameter = min(img.size)
+    left = (img.width - diameter) // 2
+    top = (img.height - diameter) // 2
+    img = img.crop((left, top, left + diameter, top + diameter))
     # drawing a white circle
+    result = Image.new('L', img.size, 0) # makint the bg transparent with the same size
     draw = ImageDraw.Draw(result)
     draw.ellipse((0, 0) + img.size, fill=255)
     # apply

@@ -1,4 +1,5 @@
-<!-- A simple html file i did long time ago when i first was exploring OCR -->
+<!-- A simple html file i did long time ago when i first was exploring OCR 
+ I added some useful adjustement -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,44 +34,92 @@
   </style>
 </head>
 <body>
+  
   <h1>Upload an image to detect text with <small>green boxes</small></h1>
+  <select id="lang">
+    <option value="eng">English</option>
+    <option value="fra">Français</option>
+    <option value="ara">العربية</option>
+  </select>
   <input type="file" id="img" accept="image/*"/>
   <br><br>
   <canvas id="cnv"></canvas>
-  <script>
-    const fl_input = document.getElementById("img");
-    const cnv = document.getElementById("cnv");
-    const detect = cnv.getContext("2d");
-    // file check
-    fl_input.addEventListener("change", (event) => {
-      const fl = event.target.files[0];
-      if (!fl) return;
+  <br>
+  <button id="redetectBtn">Redetect</button>
 
-      const img = new Image();
-      const reader = new FileReader();
-      // putting the img on canvas
-      reader.onload = function(e) {
-        img.onload = function() {
-          cnv.width = img.width;
-          cnv.height = img.height;
-          detect.drawImage(img, 0, 0);
-          // ocr apply
-          Tesseract.recognize(img, 'eng', {
-            logger: m => console.log(m) // just a console process log
-          }).then(({ data }) => {
-            data.words.forEach(word => {
-              const { x0, y0, x1, y1 } = word.bbox;
-              // drawing the boxes
-              detect.strokeStyle = 'green';
-              detect.lineWidth = 1;
-              detect.strokeRect(x0, y0, x1 - x0, y1 - y0);
-            });
-          });
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(fl);
+  <script>
+  const fl_input = document.getElementById("img");
+  const cnv = document.getElementById("cnv");
+  const detect = cnv.getContext("2d");
+  const redetectBtn = document.getElementById("redetectBtn");
+
+  let lastImgData = null; // storing DataURL of last uploaded image
+
+  function runOCR(img) {
+    // clear canvas
+    detect.clearRect(0, 0, cnv.width, cnv.height);
+
+    cnv.width = img.width;
+    cnv.height = img.height;
+    detect.drawImage(img, 0, 0);
+
+    const langSelect = document.getElementById("lang");
+    Tesseract.recognize(img, langSelect.value, {
+      logger: m => console.log(m)
+    }).then(({ data }) => {
+      data.words.forEach(word => {
+        const { x0, y0, x1, y1 } = word.bbox;
+        detect.strokeStyle = 'lime';
+        detect.lineWidth = 2;
+        const padding = 3;
+        detect.strokeRect(
+          x0 - padding, 
+          y0 - padding, 
+          (x1 - x0) + 2 * padding, 
+          (y1 - y0) + 2 * padding
+        );
+      });
     });
-  </script>
+  }
+
+  // file input
+  fl_input.addEventListener("change", (event) => {
+    const fl = event.target.files[0];
+    if (!fl) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      lastImgData = e.target.result; // save dataURL
+      localStorage.setItem("lastImgData", lastImgData);
+      const img = new Image();
+      img.onload = () => runOCR(img);
+      img.src = lastImgData;
+
+      redetectBtn.disabled = false; // enable button
+    };
+    reader.readAsDataURL(fl);
+  });
+
+  // redetect button
+  redetectBtn.addEventListener("click", () => {
+    if (!lastImgData) return;
+    const img = new Image();
+    img.onload = () => runOCR(img);
+    img.src = lastImgData;
+  });
+  
+  // On page load: check if we have saved image
+    window.addEventListener("load", () => {
+      const savedImg = localStorage.getItem("lastImgData");
+      if (savedImg) {
+        lastImgData = savedImg;
+        const img = new Image();
+        img.onload = () => runOCR(img);
+        img.src = lastImgData;
+  
+        redetectBtn.disabled = false;
+      }
+    });
+</script>
 </body>
 </html>
